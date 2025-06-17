@@ -1,0 +1,124 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.toolbar button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.toolbar button:hover {
+  background-color: #e6e9f0;
+}
+
+.toolbar button.active {
+  background-color: #007bff;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.5);
+}
+
+.editor-container {
+  border: 1px solid #dee2e6;
+  padding: 16px;
+  border-radius: 8px;
+  min-height: 250px;
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
+  position: relative;
+}
+
+.editor-container:focus-within {
+  outline: 2px solid #007bff;
+}
+
+.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  font-style: italic;
+  position: absolute;
+  pointer-events: none;
+}
+
+.output-section {
+  margin-top: 25px;
+  background-color: #ffffff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+.output-section h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+input[type="file"] {
+  margin-top: 10px;
+  display: block;
+  padding: 6px;
+}
+
+button {
+  font-size: 14px;
+  padding: 8px 14px;
+  margin-top: 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (max-width: 600px) {
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .toolbar button {
+    width: 100%;
+  }
+
+  .editor-container {
+    padding: 12px;
+    min-height: 200px;
+  }
+
+  .output-section {
+    padding: 12px;
+  }
+}
