@@ -5,6 +5,7 @@
 3. Run the following commands:
 
 ```bash
+go to ....\Cloudairy_Interview_Task\Cloudairy_editor> 
 npm install     # Installs dependencies
 npm run dev     # Starts the development server at http://localhost:5173/
 

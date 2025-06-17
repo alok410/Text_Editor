@@ -4,14 +4,25 @@ import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
 import Toolbar from './Toolbar';
 
 const TiptapEditor = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev);
+    document.body.classList.toggle('dark-mode', !darkMode);
+  };
+
   const editor = useEditor({
     extensions: [
       StarterKit,
       Underline,
       Image,
+      Link.configure({
+        openOnClick: false,
+      }),
       Placeholder.configure({
         placeholder: 'Write your text here...',
         emptyEditorClass: 'is-editor-empty',
@@ -32,6 +43,18 @@ const TiptapEditor = () => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
+    if (!file || !editor) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      editor.chain().focus().setImage({ src: reader.result }).run();
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files?.[0];
     if (!file || !editor) return;
 
     const reader = new FileReader();
@@ -68,7 +91,7 @@ const TiptapEditor = () => {
 
   return (
     <div>
-      <Toolbar editor={editor} />
+      <Toolbar editor={editor} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
       <input
         type="file"
@@ -78,7 +101,7 @@ const TiptapEditor = () => {
       />
 
       <div
-        className="editor-container"
+        className={`editor-container ${darkMode ? 'dark-mode' : ''}`}
         style={{
           border: '2px solid black',
           borderRadius: '5px',
@@ -88,6 +111,8 @@ const TiptapEditor = () => {
           marginTop: '10px',
           position: 'relative',
         }}
+        onDrop={handleDrop}
+        onDragOver={(e) => e.preventDefault()}
       >
         {showDelete && (
           <button

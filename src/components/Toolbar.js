@@ -1,7 +1,20 @@
 import React from 'react';
 
-const Toolbar = ({ editor }) => {
+const Toolbar = ({ editor, darkMode, toggleDarkMode }) => {
   if (!editor) return null;
+
+  const setLink = () => {
+    const previousUrl = editor.getAttributes('link').href;
+    const url = window.prompt('Enter URL', previousUrl || '');
+
+    if (url === null) return;
+    if (url === '') {
+      editor.chain().focus().unsetLink().run();
+      return;
+    }
+
+    editor.chain().focus().setLink({ href: url }).run();
+  };
 
   const buttons = [
     { label: 'Bold', action: () => editor.chain().focus().toggleBold().run(), isActive: () => editor.isActive('bold') },
@@ -16,6 +29,8 @@ const Toolbar = ({ editor }) => {
     { label: 'HR', action: () => editor.chain().focus().setHorizontalRule().run() },
     { label: 'Undo', action: () => editor.chain().focus().undo().run() },
     { label: 'Redo', action: () => editor.chain().focus().redo().run() },
+    { label: 'Link', action: setLink },
+    { label: 'Unlink', action: () => editor.chain().focus().unsetLink().run() },
   ];
 
   return (
@@ -29,6 +44,10 @@ const Toolbar = ({ editor }) => {
           {label}
         </button>
       ))}
+
+      <button onClick={toggleDarkMode}>
+        {darkMode ? '🌞 Light Mode' : '🌙 Dark Mode'}
+      </button>
     </div>
   );
 };
